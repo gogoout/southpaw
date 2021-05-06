@@ -806,6 +806,7 @@ public class Southpaw {
         }
 
         Yaml yaml = new Yaml(new EnvScalarConstructor());
+        yaml.addImplicitResolver(EnvScalarConstructor.ENV_TAG, EnvScalarConstructor.ENV_FORMAT, "$");
         Map<String, Object> config = yaml.load(FileHelper.getInputStream(new URI(options.valueOf(CONFIG).toString())));
         List<?> relations = options.valuesOf(RELATIONS);
         List<URI> relURIs = new ArrayList<>();
