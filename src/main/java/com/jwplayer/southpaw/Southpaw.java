@@ -44,6 +44,7 @@ import org.apache.kafka.common.serialization.Serde;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.env.EnvScalarConstructor;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -804,7 +805,7 @@ public class Southpaw {
             System.exit(0);
         }
 
-        Yaml yaml = new Yaml();
+        Yaml yaml = new Yaml(new EnvScalarConstructor());
         Map<String, Object> config = yaml.load(FileHelper.getInputStream(new URI(options.valueOf(CONFIG).toString())));
         List<?> relations = options.valuesOf(RELATIONS);
         List<URI> relURIs = new ArrayList<>();
