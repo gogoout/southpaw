@@ -19,6 +19,7 @@ import com.codahale.metrics.*;
 import com.codahale.metrics.jmx.JmxReporter;
 
 import java.util.*;
+import spark.Spark;
 
 /**
  * Simple metrics class for Southpaw
@@ -123,6 +124,9 @@ public class Metrics {
         } else {
             denormalizedRecordsToCreate = (StaticGauge<Long>) registry.getMetrics().get(DENORMALIZED_RECORDS_TO_CREATE);
         }
+        Spark.get("/healthz/*",(request,response)->{
+            return "Consumed: " + recordsConsumed.getCount();
+        });
     }
 
     /**
@@ -130,6 +134,7 @@ public class Metrics {
      */
     public void close() {
         reporter.close();
+        Spark.stop();
     }
 
     /**
